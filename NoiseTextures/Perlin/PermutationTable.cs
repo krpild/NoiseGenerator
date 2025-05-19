@@ -11,8 +11,14 @@ public class PermutationTable
     {
         PopulateTable();
         ShuffleTable(seed);
+        byte[] result = new byte[512];
+        for (int i = 0; i < _table.Length; i++)
+        {
+            result[i] = _table[i];
+            result[i + 256] = _table[i];
+        }
 
-        return _table;
+        return result;
     }
 
     private void PopulateTable()
