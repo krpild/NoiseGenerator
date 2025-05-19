@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core", "Core\Core.csproj", "{2529A4DC-793C-489A-A1E0-1D74DAF30B0B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Perlin", "Perlin\Perlin.csproj", "{49202302-08A3-4765-B37B-8186DABB5B3E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2529A4DC-793C-489A-A1E0-1D74DAF30B0B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2529A4DC-793C-489A-A1E0-1D74DAF30B0B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2529A4DC-793C-489A-A1E0-1D74DAF30B0B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2529A4DC-793C-489A-A1E0-1D74DAF30B0B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{49202302-08A3-4765-B37B-8186DABB5B3E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{49202302-08A3-4765-B37B-8186DABB5B3E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{49202302-08A3-4765-B37B-8186DABB5B3E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{49202302-08A3-4765-B37B-8186DABB5B3E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
