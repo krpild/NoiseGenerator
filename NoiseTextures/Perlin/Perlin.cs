@@ -8,6 +8,11 @@ public class Perlin
 
     private short _imageSize;
 
+    public short GetImageSize()
+    {
+        return _imageSize;
+    }
+
     public Perlin(short imageSize)
     {
         _imageSize = imageSize;
@@ -25,15 +30,19 @@ public class Perlin
         }
     }
 
-    public void RenderPermutationArray()
+    public byte[] RenderPermutationArray()
     {
         PermutationTable table = new PermutationTable();
         byte[] permTable = table.GeneratePermutationTable(1);
+        //Here we actually work with any kind of array manipulation
+        return permTable;
+        /*
         for (int i = 0; i < permTable.Length; i++)
         {
             Console.WriteLine(i + " | " + permTable[i]);
-            
         }
+        */
+
     }
 
     public void RenderArray()

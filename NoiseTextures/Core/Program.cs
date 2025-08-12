@@ -4,7 +4,8 @@ public class Program
 {
     static void Main(String[] args)
     {
-        PerlinNoise perlin = new PerlinNoise(20);
+        PerlinNoise perlin = new PerlinNoise(10);
         perlin.RenderPermutationArray();
+        perlin.RenderArray();
     }
 }
