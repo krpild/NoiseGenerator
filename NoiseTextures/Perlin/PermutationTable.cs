@@ -23,11 +23,11 @@ public class PermutationTable
 
     private void PopulateTable()
     {
-        byte num = 0;
+        byte index = 0;
         for (int i = 0; i < _table.Length; i++)
         {
-            _table[i] = num;
-            num++;
+            _table[i] = index;
+            index++;
         }
     }
 
@@ -36,13 +36,13 @@ public class PermutationTable
         var rnd = new Random(seed);
         
         byte val;
-        int num;
+        int index;
         for (int i = 255; i > 0; i--)
         {
-            num = rnd.Next(0, i + 1);
+            index = rnd.Next(0, i + 1);
             val = _table[i];
-            _table[i] = _table[num];
-            _table[num] = val;
+            _table[i] = _table[index];
+            _table[index] = val;
         }
     }
 }
