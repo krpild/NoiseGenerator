@@ -7,8 +7,12 @@ public class Program
     {
         Perlin1D perlin1D = new Perlin1D();
         perlin1D.Generate1DPerlinInRange(14);
-        perlin1D.samplePointAtPosition(0);
-        perlin1D.samplePointAtPosition(14);
+        List<double> points = perlin1D.SamplePointsWithFrequency(5);
+        foreach (var point in points)
+        {
+            Console.WriteLine(point);
+        }
+        
         /*
         Perlin2D perlin = new Perlin2D(10);
         perlin.RenderPermutationArray();
