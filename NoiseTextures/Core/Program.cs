@@ -7,11 +7,9 @@ public class Program
     {
         Perlin1D perlin1D = new Perlin1D();
         perlin1D.Generate1DPerlinInRange(14);
-        List<double> points = perlin1D.SamplePointsWithFrequency(5);
-        foreach (var point in points)
-        {
-            Console.WriteLine(point);
-        }
+        perlin1D.SamplePointsWithFrequency(8);
+        Visualizer.GraphGenerator.VisualiseGraph(perlin1D);
+        
         
         /*
         Perlin2D perlin = new Perlin2D(10);

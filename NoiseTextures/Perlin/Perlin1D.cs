@@ -5,14 +5,16 @@ namespace Perlin
 {
     public class Perlin1D
     {
-        private List<double> perlin1DSlopeValues = new List<double>();
+        private List<double> slopeValues = new List<double>();
         static readonly Random randomizer = new Random();
+
+        public List<double> interpolatedData = new List<double>();
 
         public void Generate1DPerlinInRange(int range)
         {
             for (int i = 0; i < range; i++)
             {
-                perlin1DSlopeValues.Add(GetRandomDouble());
+                slopeValues.Add(GetRandomDouble());
             }
         }
 
@@ -21,17 +23,14 @@ namespace Perlin
             int floorPosition = (int)Math.Floor(position);
             int ceilingPosition = (int)Math.Ceiling(position);
 
-            double a = perlin1DSlopeValues[floorPosition];
-            double b = perlin1DSlopeValues[ceilingPosition];
-
             double distanceFromFloor = position - floorPosition;
             double distanceFromCeiling = distanceFromFloor - 1;
 
-            double floorDotProduct = distanceFromFloor * a;
-            double ceilingDotProduct = distanceFromCeiling * b;
-            
+            double floorDotProduct = distanceFromFloor * slopeValues[floorPosition];
+            double ceilingDotProduct = distanceFromCeiling * slopeValues[ceilingPosition];
 
-            double sampledPoint = floorDotProduct + SmoothStep(distanceFromFloor) * (ceilingDotProduct-floorDotProduct); //LERP
+            double sampledPoint = floorDotProduct + SmoothStep(distanceFromFloor)
+            * (ceilingDotProduct - floorDotProduct); //LERP
 
             return sampledPoint;
         }
@@ -41,11 +40,11 @@ namespace Perlin
             return 6 * Math.Pow(x, 5) - 15 * Math.Pow(x, 4) + 10 * Math.Pow(x, 3);
         }
 
-        public List<double> SamplePointsWithFrequency(int frequency)
+        public void SamplePointsWithFrequency(int frequency)
         {
             List<double> interpolatedPoints = new List<double>();
             double fraction = 1.0 / (frequency + 1);
-            for (int i = 0; i < perlin1DSlopeValues.Count - 1; i++)
+            for (int i = 0; i < slopeValues.Count - 1; i++)
             {
                 interpolatedPoints.Add(SamplePointAtPosition(i));
 
@@ -60,7 +59,7 @@ namespace Perlin
 
             interpolatedPoints.Add(0);
 
-            return interpolatedPoints;
+            interpolatedData = interpolatedPoints;
         }
 
         private static double GetRandomDouble()
