@@ -4,18 +4,27 @@ using System.CodeDom.Compiler;
 namespace Perlin
 {
     public class Perlin1D
-    {
+    {   
+        /*
+        We could actually just make it so that 
+        there is a list of octaves where if 
+        there is a single member, we have a 
+        noise function without additional octaves. 
+        This might be quite clever actually.
+        */
         private List<double> slopeValues = new List<double>();
         static readonly Random randomizer = new Random();
-
         public List<double> interpolatedData = new List<double>();
 
-        public void Generate1DPerlinInRange(int range)
+        public void Generate1DPerlinInRange(int range, int octaves)
         {
+            //TODO: add octaves
             for (int i = 0; i < range; i++)
             {
                 slopeValues.Add(GetRandomDouble());
             }
+
+
         }
 
         public double SamplePointAtPosition(double position)
@@ -40,7 +49,7 @@ namespace Perlin
             return 6 * Math.Pow(x, 5) - 15 * Math.Pow(x, 4) + 10 * Math.Pow(x, 3);
         }
 
-        public void SamplePointsWithFrequency(int frequency)
+        public void SamplePointsWithFrequency(int frequency) //Becomes problematic with octaves. Will change later.
         {
             List<double> interpolatedPoints = new List<double>();
             double fraction = 1.0 / (frequency + 1);

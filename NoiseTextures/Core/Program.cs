@@ -6,7 +6,7 @@ public class Program
     static void Main(String[] args)
     {
         Perlin1D perlin1D = new Perlin1D();
-        perlin1D.Generate1DPerlinInRange(10);
+        perlin1D.Generate1DPerlinInRange(10,1);
         perlin1D.SamplePointsWithFrequency(25);
         Visualizer.GraphGenerator.VisualiseGraph(perlin1D);
         

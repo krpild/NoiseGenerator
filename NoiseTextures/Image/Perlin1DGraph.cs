@@ -1,7 +1,3 @@
-using System;
-using System.Drawing;
-using System.Reflection.Emit;
-using System.Xml.Schema;
 using Perlin;
 
 namespace Visualizer
@@ -12,7 +8,6 @@ namespace Visualizer
         {
 
             string[,] drawing = BuildGraph(noise);
-            Console.WriteLine(drawing.GetLength(0));
             
             for (int x = 0; x < drawing.GetLength(0); x++)
             {
