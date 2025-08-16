@@ -6,9 +6,11 @@ public class Program
     static void Main(String[] args)
     {
         Perlin1D perlin1D = new Perlin1D();
-        perlin1D.Generate1DPerlinInRange(5,1);
-        perlin1D.SamplePointsWithResolution(25);
-        Visualizer.GraphGenerator.VisualiseGraph(perlin1D);
+        perlin1D.Generate1DPerlinInRange(6,2);
+        perlin1D.SamplePointsWithResolution(45);
+        
+        
+        //Visualizer.GraphGenerator.VisualiseGraph(perlin1D);
         
         
         /*

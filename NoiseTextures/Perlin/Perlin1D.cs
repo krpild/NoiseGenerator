@@ -60,7 +60,7 @@ namespace Perlin
 
         }
 
-        public double SamplePointAtRatio(double ratio) //Should be SamplePointAtRatio we get a position from ratio by multiplying it with the element count.
+        public double SamplePointAtRatio(double ratio, int octave) //Should be SamplePointAtRatio we get a position from ratio by multiplying it with the element count.
         {
             double position = ratio * slopeValues.Count;
             int floorPosition = (int)Math.Floor(position);
@@ -69,14 +69,14 @@ namespace Perlin
             double distanceFromFloor = position - floorPosition;
             double distanceFromCeiling = distanceFromFloor - 1;
 
-            double floorDotProduct = distanceFromFloor * slopeValues[floorPosition];
-            Console.WriteLine(slopeValues.Count);
-            Console.WriteLine(ceilingPosition);
+            double floorDotProduct = distanceFromFloor * octaveSlopes[octave][floorPosition];
 
-            double ceilingDotProduct = distanceFromCeiling * slopeValues[ceilingPosition];
+            double ceilingDotProduct = distanceFromCeiling * octaveSlopes[octave][ceilingPosition];
 
             double sampledPoint = floorDotProduct + SmoothStep(distanceFromFloor)
             * (ceilingDotProduct - floorDotProduct); //LERP
+
+            sampledPoint /= Math.Pow(2, octave);
 
             return sampledPoint;
         }
@@ -89,34 +89,71 @@ namespace Perlin
         public void SamplePointsWithResolution(int resolution) //Becomes problematic with octaves. Will change later. 
         // Samples a point at the original octave and finds that same relative position in the next.
         {
+            List<double> ratios = GetRatiosAndInterpolateFirstPerlin(resolution);
+
+            for (int i = 1; i < octaveSlopes.Count; i++)
+            {
+                List<double> interpolated = new List<double>();
+                foreach (var ratio in ratios)
+                {
+                    interpolated.Add(SamplePointAtRatio(ratio, i));
+                    
+                }
+                interpolated.Add(0);
+                octavesInterpolated.Add(interpolated);
+            }
+
+            interpolateOctaves();
+
+        }
+
+        private void interpolateOctaves()
+        {
+            List<double> originalNoise = octavesInterpolated[0];
+
+            for (int i = 1; i < octavesInterpolated.Count; i++)
+            {
+                for (int j = 0; j < originalNoise.Count; j++)
+                {
+                    originalNoise[j] += octavesInterpolated[i][j];
+                }
+            }
+
+            foreach (var point in octavesInterpolated[1])
+            {
+                Console.WriteLine(point);
+            }
+
+            interpolatedData = originalNoise;
+        }
+
+        private List<double> GetRatiosAndInterpolateFirstPerlin(int resolution)
+        {
             List<double> interpolatedPoints = new List<double>();
-            double fraction = 1.0 / (resolution + 1); //This is a fraction of the original noise.
+            double fraction = 1.0 / (resolution + 1);
             List<double> ratios = new List<double>();
             for (int i = 0; i < slopeValues.Count - 1; i++)
             {
                 double ratio = i / slopeValues.Count;
-                interpolatedPoints.Add(SamplePointAtRatio(ratio));
+                ratios.Add(ratio);
+                interpolatedPoints.Add(SamplePointAtRatio(ratio, 0));
 
                 double position;
 
                 for (int j = 0; j < resolution; j++)
                 {
-                    position = i + fraction * (j + 1); //It will calculate a position for the original.
+                    position = i + fraction * (j + 1);
                     ratio = position / slopeValues.Count;
-                    ratios.Add(ratio); //Save positions for future octaves.
-                    
-                    interpolatedPoints.Add(SamplePointAtRatio(ratio));
+                    ratios.Add(ratio);
+
+                    interpolatedPoints.Add(SamplePointAtRatio(ratio, 0));
                 }
             }
 
-            foreach (var ratio in ratios)
-            {
-                Console.WriteLine(ratio);
-            }
-
             interpolatedPoints.Add(0);
+            octavesInterpolated.Add(interpolatedPoints);
 
-            interpolatedData = interpolatedPoints;
+            return ratios;
         }
 
         private static double GetRandomDouble()
