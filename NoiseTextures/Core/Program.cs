@@ -6,7 +6,7 @@ public class Program
     static void Main(String[] args)
     {
         Perlin1D perlin1D = new Perlin1D();
-        perlin1D.Generate1DPerlinInRange(6,2);
+        perlin1D.Generate1DPerlinInRange(5,4);
         perlin1D.SamplePointsWithResolution(45);
         
         
