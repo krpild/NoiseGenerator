@@ -4,10 +4,10 @@ namespace Visualizer
 {
     public static class GraphGenerator
     {
-        public static void VisualiseGraph(Perlin1D noise)
+        public static void VisualiseGraph(Perlin1D perlin)
         {
 
-            string[,] drawing = BuildGraph(noise);
+            string[,] drawing = BuildGraph(perlin);
             
             for (int x = 0; x < drawing.GetLength(0); x++)
             {
@@ -36,29 +36,31 @@ namespace Visualizer
 
         }
 
-        private static string[,] BuildGraph(Perlin1D noise)
+        private static string[,] BuildGraph(Perlin1D perlin)
         {
-            double ceiling = Math.Round(noise.interpolatedData.Max() + 0.5, 1);
-            double floor = Math.Round(noise.interpolatedData.Min() - 0.5, 1);
+            double ceiling = Math.Round(perlin.noise.Max() + 0.5, 1);
+            double floor = Math.Round(perlin.noise.Min() - 0.5, 1);
+
+            
 
             List<double> verticalRange = GetVerticalVisualisationRange(floor, ceiling);
 
-            string[,] drawing = new string[verticalRange.Count, noise.interpolatedData.Count];
+            string[,] drawing = new string[verticalRange.Count, perlin.noise.Count];
             double position;
             string symbol;
             bool occupied;
 
-            for (int x = 0; x < noise.interpolatedData.Count; x++)
+            for (int x = 0; x < perlin.noise.Count; x++)
             {
                 occupied = false;
                 for (int y = verticalRange.Count - 1; y >= 0; y--)
                 {
                     position = verticalRange[y];
-                    if (Math.Round(noise.interpolatedData[x], 1) == position)
+                    if (Math.Round(perlin.noise[x], 1) == position)
                     {
                         occupied = !occupied;
                         symbol = "#";
-                        if (noise.interpolatedData[x] == 0) symbol = "@";
+                        if (perlin.noise[x] == 0) symbol = "@";
                         if (position == 0) occupied = !occupied;
                     }
                     else if (occupied)
