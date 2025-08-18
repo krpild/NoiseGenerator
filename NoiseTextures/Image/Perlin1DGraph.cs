@@ -38,12 +38,7 @@ namespace Visualizer
 
         private static string[,] BuildGraph(Perlin1D perlin)
         {
-            double ceiling = Math.Round(perlin.noise.Max() + 0.5, 1);
-            double floor = Math.Round(perlin.noise.Min() - 0.5, 1);
-
-            
-
-            List<double> verticalRange = GetVerticalVisualisationRange(floor, ceiling);
+            List<double> verticalRange = GetVerticalVisualisationRange();
 
             string[,] drawing = new string[verticalRange.Count, perlin.noise.Count];
             double position;
@@ -85,14 +80,14 @@ namespace Visualizer
             return drawing;
         }
 
-        private static List<double> GetVerticalVisualisationRange(double floor, double ceiling)
+        private static List<double> GetVerticalVisualisationRange()
         {
             List<double> verticalRange = new List<double>();
-            double point = floor;
+            double point = -1.0;
 
             verticalRange.Add(point);
 
-            while (point < ceiling)
+            while (point < 1.0)
             {
                 verticalRange.Add(Math.Round(point, 1));
                 point += 0.1;
