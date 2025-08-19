@@ -8,12 +8,12 @@ namespace Visualizer
         {
 
             string[,] drawing = BuildGraph(perlin);
-            
+
             for (int x = 0; x < drawing.GetLength(0); x++)
             {
                 for (int y = 0; y < drawing.GetLength(1); y++)
                 {
-                    
+
                     switch (drawing[x, y])
                     {
                         case "@":
@@ -95,5 +95,7 @@ namespace Visualizer
 
             return verticalRange;
         }
+        
+        
     }
 }

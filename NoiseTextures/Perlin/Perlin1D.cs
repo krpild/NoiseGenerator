@@ -5,7 +5,7 @@ namespace Perlin
     /// </summary>
     public class Perlin1D
     {
-        private List<List<double>> perlinSlopeList = new List<List<double>>();
+        public List<List<double>> perlinSlopeList = new List<List<double>>();
         static readonly Random randomizer = new Random();
         public List<double> noise = new List<double>();
         private List<List<double>> interpolatedPerlinList = new List<List<double>>();
@@ -62,6 +62,7 @@ namespace Perlin
         /// <param name="resolution">amount of points sampled between slopes.</param>
         public void SamplePointsWithResolution(int resolution)
         {
+            interpolatedPerlinList.Clear();
             List<double> ratios = GetRatiosAndInterpolateFirstPerlin(resolution);
 
             for (int i = 1; i < perlinSlopeList.Count; i++)
@@ -137,6 +138,31 @@ namespace Perlin
         private static double GetRandomDouble()
         {
             return randomizer.NextDouble() * (1 - (-1)) + -1;
+        }
+
+        public void IncrementSlopes(List<List<double>> multipliers)
+        {
+            double candidate;
+            for (int i = 0; i < perlinSlopeList.Count; i++)
+            {
+                for (int j = 0; j < perlinSlopeList[i].Count; j++)
+                {
+                    candidate = perlinSlopeList[i][j] + 0.05 * multipliers[i][j];
+                    if (candidate > 1) multipliers[i][j] *= -1;
+                    if (candidate < -1) multipliers[i][j] *= -1;
+
+                    perlinSlopeList[i][j] += 0.05 * multipliers[i][j];
+            
+
+                    /*
+                    position = perlinSlopeList[i][j];
+                    timePosition = Math.Asin(position);
+                    timePosition += 0.1;
+                    position = Math.Sin(timePosition);
+                    perlinSlopeList[i][j] = position;
+                    */
+                }
+            }
         }
     }
 }
