@@ -3,33 +3,38 @@ using Perlin;
 
 namespace Visualizer;
 
+/// <summary>
+/// Class <c>Perlin1DAnimator</c> handles Perlin noise animation. It only needs slope values.
+/// </summary>
 public class Perlin1DAnimator
 {
-    /*
-    Should determine in the beginning which of the slopes are negative and positive. 
-    If they reach an upper ceiling, their position multiplier changes.
-    Could map a list with slopeValue multipliers and shove it in here.
-    */
 
     List<List<double>> slopeMultiplier = new List<List<double>>();
 
-    private Perlin1D perlin;
+    private Perlin1D _perlin;
 
-    public void Animate(Perlin1D function)
+    public Perlin1DAnimator(Perlin1D perlin)
     {
-        perlin = function;
+        _perlin = perlin;
+    }
+
+    /// <summary>
+    /// Animates the perlin noise function at a fixed resolution.
+    /// </summary>
+    public void Animate()
+    {
         MapSlopeMultiplier();
         Step();
     }
 
     private void MapSlopeMultiplier()
     {
-        for (int i = 0; i < perlin.perlinSlopeList.Count; i++)
+        for (int i = 0; i < _perlin!.perlinSlopeList.Count; i++)
         {
             slopeMultiplier.Add(new List<double>());
-            for (int j = 0; j < perlin.perlinSlopeList[i].Count; j++)
+            for (int j = 0; j < _perlin.perlinSlopeList[i].Count; j++)
             {
-                if (perlin.perlinSlopeList[i][j] > 0)
+                if (_perlin.perlinSlopeList[i][j] > 0)
                 {
                     slopeMultiplier[i].Add(1);
                 }
@@ -44,18 +49,16 @@ public class Perlin1DAnimator
     private void Step()
     {
         ClearConsole();
-        perlin.IncrementSlopes(slopeMultiplier);
-        perlin.SamplePointsWithResolution(30);
-        GraphGenerator.VisualiseGraph(perlin);
-        Thread.Sleep(20);
+        _perlin.IncrementSlopes(slopeMultiplier);
+        _perlin.SamplePointsWithResolution(50);
+        GraphGenerator.VisualiseGraph(_perlin);
+        Thread.Sleep(100);
         Step();
     }
-    
+
     private void ClearConsole()
     {
         Console.SetCursorPosition(0, 0);
         Console.CursorVisible = false;
-        
     }
-
 }

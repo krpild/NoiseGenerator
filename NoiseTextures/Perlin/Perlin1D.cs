@@ -17,6 +17,8 @@ namespace Perlin
         /// <param name="octaves">each octave represents an additional perlin noise function laid over the first perlin noise function. 0 octaves means that it will be a bare perlin noise function.</param>
         public void GenerateSlopeValuesInRange(int range, int octaves)
         {
+            if (octaves > 10 || octaves < 0) throw new Exception("Octaves must be a positive integer below 11.");
+            if (range > 100 || range < 0) throw new Exception("Range must be a positive integer below 101");
             perlinSlopeList = new List<List<double>>(); //Clear the list if it's already populated.
             octaves += 1;
             for (int o = 0; o < octaves; o++)
@@ -62,6 +64,8 @@ namespace Perlin
         /// <param name="resolution">amount of points sampled between slopes.</param>
         public void SamplePointsWithResolution(int resolution)
         {
+            if (resolution < 0) throw new Exception("Resolution cannot be negative");
+            if (resolution > 1000) throw new Exception("Resolution must be below 1001");
             interpolatedPerlinList.Clear();
             List<double> ratios = GetRatiosAndInterpolateFirstPerlin(resolution);
 
@@ -148,19 +152,11 @@ namespace Perlin
                 for (int j = 0; j < perlinSlopeList[i].Count; j++)
                 {
                     candidate = perlinSlopeList[i][j] + 0.05 * multipliers[i][j];
-                    if (candidate > 1) multipliers[i][j] *= -1;
-                    if (candidate < -1) multipliers[i][j] *= -1;
+
+                    if (candidate > 1 || candidate < -1) multipliers[i][j] *= -1;
 
                     perlinSlopeList[i][j] += 0.05 * multipliers[i][j];
             
-
-                    /*
-                    position = perlinSlopeList[i][j];
-                    timePosition = Math.Asin(position);
-                    timePosition += 0.1;
-                    position = Math.Sin(timePosition);
-                    perlinSlopeList[i][j] = position;
-                    */
                 }
             }
         }
