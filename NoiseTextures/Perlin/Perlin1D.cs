@@ -27,7 +27,7 @@ namespace Perlin
                 List<double> octave = new List<double>();
                 for (int i = 0; i < range; i++)
                 {
-                    double slope = GetRandomDouble();
+                    double slope = GetRandomSlope();
 
                     octave.Add(slope);
                 }
@@ -139,24 +139,31 @@ namespace Perlin
             return ratios;
         }
 
-        private static double GetRandomDouble()
+        private static double GetRandomSlope()
         {
             return randomizer.NextDouble() * (1 - (-1)) + -1;
+        }
+
+        private static double GetRandomIncrement()
+        {
+            return (randomizer.NextDouble() + 0.1) * 0.07;
         }
 
         public void IncrementSlopes(List<List<double>> multipliers)
         {
             double candidate;
+            double increment;
             for (int i = 0; i < perlinSlopeList.Count; i++)
             {
                 for (int j = 0; j < perlinSlopeList[i].Count; j++)
                 {
-                    candidate = perlinSlopeList[i][j] + 0.05 * multipliers[i][j];
+                    increment = GetRandomIncrement();
+                    candidate = perlinSlopeList[i][j] + increment * multipliers[i][j];
 
                     if (candidate > 1 || candidate < -1) multipliers[i][j] *= -1;
 
-                    perlinSlopeList[i][j] += 0.05 * multipliers[i][j];
-            
+                    perlinSlopeList[i][j] += increment * multipliers[i][j];
+
                 }
             }
         }
