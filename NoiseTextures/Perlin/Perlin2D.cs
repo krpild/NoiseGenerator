@@ -30,9 +30,13 @@ public class Perlin2D
             }
             Console.Write("\n");
         }
-        
-        
-
     }
+
+    private double SmoothStep(double x)
+    {
+        return 6 * Math.Pow(x, 5) - 15 * Math.Pow(x, 4) + 10 * Math.Pow(x, 3);
+    }
+    
+
 
 }
