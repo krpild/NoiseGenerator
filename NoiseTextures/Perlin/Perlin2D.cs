@@ -16,8 +16,6 @@ public class Perlin2D
 
     public void GenerateRandomUnitVectorsInRange(int height, int width)
     {
-        //We have a 2D matrix of Vector2 structs.
-        //Console.WriteLine(preparedGradientList.Count);
 
         for (int i = 0; i < height; i++)
         {
@@ -26,10 +24,13 @@ public class Perlin2D
             {
                 int gradientIndex = randomizer.Next(0, preparedGradientList.Count);
                 slopeList[i].Add(preparedGradientList[gradientIndex]);
-                Console.Write(slopeList[i][j]);
             }
-            Console.Write("\n");
         }
+    }
+
+    public void SamplePointAtRatio()
+    {
+        
     }
 
     private double SmoothStep(double x)
@@ -37,6 +38,5 @@ public class Perlin2D
         return 6 * Math.Pow(x, 5) - 15 * Math.Pow(x, 4) + 10 * Math.Pow(x, 3);
     }
     
-
 
 }
