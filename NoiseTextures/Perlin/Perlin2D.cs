@@ -30,6 +30,17 @@ public class Perlin2D
 
     public void SamplePointAtRatio()
     {
+        for (int i = 0; i < slopeList.Count; i++)
+        {
+            for (int j = 0; j < slopeList[i].Count; j++)
+            {
+                Console.WriteLine(slopeList[i].Count);
+            }
+        }
+    }
+
+    public void SamplePointsWithResolution(int resolution)
+    {
         
     }
 

@@ -24,6 +24,8 @@ public class Program
 
         perlin2D.GenerateRandomUnitVectorsInRange(4, 4);
 
+        perlin2D.SamplePointAtRatio();
+
 
     }
 }
