@@ -41,7 +41,13 @@ public class Perlin2D
 
     public void SamplePointsWithResolution(int resolution)
     {
-        
+        List<double> ratios = GetRatiosAndInterpolateFirstPerlin(resolution);
+    }
+
+    private List<double> GetRatiosAndInterpolateFirstPerlin(int resolution)
+    {
+        //Somehow I gotta do this with vectors... Damn!
+        return [];
     }
 
     private double SmoothStep(double x)
