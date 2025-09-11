@@ -1,5 +1,6 @@
 using System;
 using System.Globalization;
+using System.Net;
 using System.Numerics;
 
 namespace Perlin;
@@ -47,6 +48,20 @@ public class Perlin2D
     private List<double> GetRatiosAndInterpolateFirstPerlin(int resolution)
     {
         //Somehow I gotta do this with vectors... Damn!
+        List<List<double>> interpolatedPoints = new List<List<double>>();
+        double fraction = 1.0 / (resolution + 1);
+        List<Vector2> ratios = new List<Vector2>();
+
+        double ratio;
+
+        for (int i = 0; i < slopeList.Count; i++)
+        {
+            for (int j = 0; j < slopeList[0].Count; j++)
+            {
+                
+            }
+        }
+
         return [];
     }
 
